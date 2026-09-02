@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milan Beauty Parlour — Arti Panwar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#2A1620;
+    --ink-soft:#5A4048;
+    --ivory:#FBF6EF;
+    --paper:#F3E7E1;
+    --berry:#9B2B45;
+    --berry-dark:#761F35;
+    --gold:#A47B3F;
+    --line: rgba(42,22,32,0.15);
+    --edit: #B5772F;
+    --edit-bg: rgba(181,119,47,0.08);
+    --max: 1180px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    font-size:16px;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    line-height:1.12;
+    margin:0;
+    color:var(--ink);
+  }
+  p{ margin:0; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 32px; }
+  section{ padding:110px 0; }
+  @media (max-width:720px){
+    section{ padding:72px 0; }
+    .wrap{ padding:0 22px; }
+  }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--berry);
+    outline-offset:3px;
+  }
+
+  /* editable placeholder styling */
+  .edit{
+    color:var(--edit);
+    background:var(--edit-bg);
+    border:1px dashed rgba(181,119,47,0.45);
+    border-radius:4px;
+    padding:0.02em 0.45em;
+    font-style:normal;
+  }
+  .edit-block{
+    border:1.5px dashed rgba(181,119,47,0.5);
+    background:var(--edit-bg);
+    color:var(--edit);
+    border-radius:10px;
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(251,246,239,0.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px;
+    max-width:var(--max); margin:0 auto;
+  }
+  .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .brand svg{ flex-shrink:0; }
+  .brand-text{ display:flex; flex-direction:column; line-height:1.1; }
+  .brand-text .name{ font-family:'Fraunces', serif; font-style:italic; font-size:1.5rem; color:var(--ink); }
+  .brand-text .tag{ font-size:0.68rem; letter-spacing:0.03em; color:var(--ink-soft); }
+
+  nav.links{ display:flex; align-items:center; gap:34px; }
+  nav.links a{
+    text-decoration:none; font-size:0.95rem; color:var(--ink-soft);
+    transition:color .2s ease;
+    position:relative;
+  }
+  nav.links a:hover{ color:var(--berry); }
+  .nav-cta{
+    background:var(--berry); color:#fff !important; padding:11px 22px;
+    border-radius:100px; font-weight:600; font-size:0.9rem !important;
+    transition:background .2s ease;
+  }
+  .nav-cta:hover{ background:var(--berry-dark); color:#fff !important; }
+
+  .burger{ display:none; background:none; border:none; cursor:pointer; padding:6px; }
+  .burger span{ display:block; width:24px; height:2px; background:var(--ink); margin:5px 0; transition:transform .25s ease, opacity .25s ease; }
+  .mobile-panel{
+    display:none; flex-direction:column; gap:4px;
+    padding:6px 22px 22px;
+    border-top:1px solid var(--line);
+  }
+  .mobile-panel a{
+    text-decoration:none; color:var(--ink); padding:12px 0;
+    border-bottom:1px solid var(--line); font-size:1rem;
+  }
+  .mobile-panel a:last-child{ border-bottom:none; }
+
+  @media (max-width:860px){
+    nav.links{ display:none; }
+    .burger{ display:block; }
+    header.open .mobile-panel{ display:flex; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-top:88px;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  @media (max-width:900px){
+    .hero{ grid-template-columns:1fr; padding-top:56px; }
+  }
+  .hero h1{
+    font-size:clamp(2.5rem, 4.6vw, 4rem);
+    max-width:12ch;
+  }
+  .hero .lede{
+    margin-top:26px; font-size:1.1rem; color:var(--ink-soft); max-width:46ch;
+  }
+  .hero-ctas{ margin-top:36px; display:flex; gap:16px; flex-wrap:wrap; }
+  .btn-primary, .btn-secondary{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:14px 28px; border-radius:100px; font-weight:600; font-size:0.95rem;
+    text-decoration:none; border:1.5px solid transparent; cursor:pointer;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .btn-primary{ background:var(--berry); color:#fff; }
+  .btn-primary:hover{ background:var(--berry-dark); }
+  .btn-secondary{ border-color:var(--ink); color:var(--ink); background:transparent; font-family:'Manrope'; }
+  .btn-secondary:hover{ background:var(--ink); color:var(--ivory); }
+
+  .hero-visual{ position:relative; }
+  .arch{
+    position:relative;
+    width:100%;
+    aspect-ratio:3/4;
+    background:linear-gradient(160deg, var(--paper), #EADAD3);
+    border-radius:220px 220px 20px 20px;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    opacity:0; transform:translateY(18px) scale(0.98);
+    animation:reveal 0.9s cubic-bezier(.2,.7,.2,1) 0.15s forwards;
+  }
+  @keyframes reveal{ to{ opacity:1; transform:translateY(0) scale(1); } }
+  .arch::before{
+    content:"";
+    position:absolute; inset:14px;
+    border:1px solid rgba(164,123,63,0.45);
+    border-radius:210px 210px 12px 12px;
+  }
+  .arch .ph-label{
+    text-align:center; color:var(--edit); font-size:0.92rem; padding:0 30px;
+  }
+  .ring{
+    position:absolute; width:120px; height:120px; border-radius:50%;
+    border:1.5px solid var(--gold); opacity:0.55;
+  }
+  .ring.r1{ top:-24px; right:-24px; }
+  .ring.r2{ bottom:30px; left:-40px; width:70px; height:70px; }
+
+  @media (prefers-reduced-motion:reduce){
+    .arch{ animation:none; opacity:1; transform:none; }
+  }
+
+  /* ---------- SECTION HEADS ---------- */
+  .section-head{ max-width:640px; margin-bottom:52px; }
+  .section-head h2{ font-size:clamp(1.9rem,3.2vw,2.6rem); }
+  .section-head p{ margin-top:14px; color:var(--ink-soft); font-size:1.05rem; }
+  .rule{
+    width:52px; height:2px; background:var(--gold); margin-bottom:22px; border:none;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{ background:var(--paper); }
+  .about-grid{
+    display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:center;
+  }
+  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; gap:36px; } }
+  .about-photo{
+    aspect-ratio:4/5; border-radius:16px;
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:24px;
+  }
+  .about h2{ font-size:clamp(1.9rem,3.2vw,2.5rem); margin-bottom:20px; }
+  .about-bio p{ color:var(--ink-soft); margin-bottom:16px; }
+  .signature{
+    margin-top:28px; padding-top:24px; border-top:1px solid var(--line);
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .signature .who{ font-family:'Fraunces', serif; font-style:italic; font-size:1.3rem; }
+  .signature .role{ font-size:0.9rem; color:var(--ink-soft); }
+
+  /* ---------- SERVICES ---------- */
+  .services-note{
+    font-size:0.88rem; color:var(--ink-soft); margin-bottom:44px;
+  }
+  .menu-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:56px 64px;
+  }
+  @media (max-width:860px){ .menu-grid{ grid-template-columns:1fr; gap:44px; } }
+  .menu-cat h3{
+    font-size:1.35rem; margin-bottom:20px; padding-bottom:14px; border-bottom:1.5px solid var(--ink);
+  }
+  .menu-item{
+    display:flex; align-items:baseline; gap:8px; padding:11px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  .menu-item:last-child{ border-bottom:none; }
+  .menu-item .name{ white-space:nowrap; font-weight:600; font-size:0.98rem; }
+  .menu-item .leader{ flex:1; border-bottom:1px dotted rgba(42,22,32,0.35); transform:translateY(-4px); }
+  .menu-item .price{ white-space:nowrap; }
+
+  /* ---------- GALLERY ---------- */
+  .gallery{ background:var(--paper); }
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(6, 1fr); gap:18px;
+  }
+  .gallery-grid .ph{ grid-column:span 2; aspect-ratio:1/1; }
+  .gallery-grid .ph.tall{ grid-row: span 2; aspect-ratio:auto; }
+  @media (max-width:760px){
+    .gallery-grid{ grid-template-columns:repeat(2,1fr); }
+    .gallery-grid .ph{ grid-column:span 1; grid-row:auto !important; aspect-ratio:1/1 !important; }
+  }
+  .ph{
+    border-radius:12px; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:14px; font-size:0.85rem;
+  }
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testi-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:32px;
+  }
+  @media (max-width:900px){ .testi-grid{ grid-template-columns:1fr; } }
+  .testi-card{
+    background:var(--ivory); border:1px solid var(--line); border-radius:14px; padding:32px;
+  }
+  .testi-card .mark{ font-family:'Fraunces', serif; font-size:2.4rem; color:var(--gold); line-height:1; margin-bottom:6px; }
+  .testi-card p.quote{ color:var(--ink-soft); }
+  .testi-card .who{ margin-top:18px; font-weight:600; font-size:0.92rem; }
+  .testi-card .where{ font-size:0.85rem; color:var(--ink-soft); }
+
+  /* ---------- HOURS + LOCATION ---------- */
+  .hl{ background:var(--ink); color:var(--ivory); }
+  .hl .section-head p{ color:rgba(251,246,239,0.75); }
+  .hl .rule{ background:var(--gold); }
+  .hl-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; }
+  @media (max-width:860px){ .hl-grid{ grid-template-columns:1fr; gap:40px; } }
+  .hours-list{ display:flex; flex-direction:column; }
+  .hours-row{
+    display:flex; justify-content:space-between; padding:13px 0;
+    border-bottom:1px solid rgba(251,246,239,0.14); font-size:0.98rem;
+  }
+  .hours-row:last-child{ border-bottom:none; }
+  .hl .edit{ color:#E9C79A; border-color:rgba(233,199,154,0.5); background:rgba(233,199,154,0.08); }
+  .location-card p{ margin-bottom:10px; color:rgba(251,246,239,0.85); }
+  .map-ph{
+    margin-top:20px; aspect-ratio:16/9; border-radius:12px;
+    border:1.5px dashed rgba(233,199,154,0.5); background:rgba(233,199,154,0.06);
+    display:flex; align-items:center; justify-content:center; text-align:center; padding:20px;
+    color:#E9C79A; font-size:0.9rem;
+  }
+
+  /* ---------- CONTACT / BOOKING ---------- */
+  .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:64px; }
+  @media (max-width:860px){ .contact-grid{ grid-template-columns:1fr; gap:36px; } }
+  .contact-info .item{ margin-bottom:26px; }
+  .contact-info .label{ font-size:0.85rem; color:var(--ink-soft); margin-bottom:4px; }
+  .contact-info .value{ font-size:1.05rem; font-weight:600; }
+
+  form{ display:flex; flex-direction:column; gap:16px; }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field label{ font-size:0.88rem; color:var(--ink-soft); }
+  .field input, .field select, .field textarea{
+    font-family:'Manrope'; font-size:0.98rem; padding:13px 14px;
+    border:1.5px solid var(--line); border-radius:8px; background:#fff; color:var(--ink);
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--berry); outline:none; }
+  .row-2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:500px){ .row-2{ grid-template-columns:1fr; } }
+  .submit-btn{
+    margin-top:6px; align-self:flex-start;
+  }
+  .form-note{ font-size:0.82rem; color:var(--ink-soft); margin-top:4px; }
+  #formStatus{ font-size:0.92rem; margin-top:4px; min-height:1.4em; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background:var(--paper); padding:56px 0 30px; }
+  .footer-grid{
+    display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:40px; padding-bottom:36px; border-bottom:1px solid var(--line);
+  }
+  @media (max-width:700px){ .footer-grid{ grid-template-columns:1fr; gap:28px; } }
+  .footer-grid h4{ font-size:0.95rem; margin-bottom:16px; }
+  .footer-grid ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .footer-grid a{ text-decoration:none; color:var(--ink-soft); font-size:0.92rem; }
+  .footer-grid a:hover{ color:var(--berry); }
+  .foot-bottom{
+    padding-top:22px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-size:0.85rem; color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="nav">
+    <a href="#top" class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <path d="M17 3 C 8 3 4 10 4 17 C 4 24 8 31 17 31 C 26 31 30 24 30 17 C 30 10 26 3 17 3 Z" stroke="#A47B3F" stroke-width="1.4"/>
+        <circle cx="17" cy="17" r="4.2" stroke="#9B2B45" stroke-width="1.4"/>
+      </svg>
+      <span class="brand-text">
+        <span class="name">Milan</span>
+        <span class="tag">Beauty Parlour</span>
+      </span>
+    </a>
+    <nav class="links">
+      <a href="#services">Services</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#about">About</a>
+      <a href="#hours">Hours &amp; location</a>
+      <a href="#contact" class="nav-cta">Book an appointment</a>
+    </nav>
+    <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="#services">Services</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#hours">Hours &amp; location</a>
+    <a href="#contact">Book an appointment</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <div class="hero-copy">
+      <h1>Look after yourself, beautifully.</h1>
+      <p class="lede">Milan Beauty Parlour is a neighbourhood salon for hair, skin, bridal beauty and everyday self-care — run by <span class="edit">[Arti Panwar]</span> and her team in <span class="edit">[your area / city]</span>.</p>
+      <div class="hero-ctas">
+        <a href="#contact" class="btn-primary">Book an appointment</a>
+        <a href="tel:+910000000000" class="btn-secondary">Call <span class="edit">[+91 00000 00000]</span></a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="ring r1" aria-hidden="true"></div>
+      <div class="ring r2" aria-hidden="true"></div>
+      <div class="arch">
+        <p class="ph-label">[Add a photo of your salon, chair or team here — a bright, welcoming shot works best]</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap about-grid">
+      <div class="about-photo edit-block">
+        <p>[Add a photo of Arti Panwar here]</p>
+      </div>
+      <div>
+        <h2>Meet the owner</h2>
+        <div class="about-bio">
+          <p>Arti Panwar started Milan Beauty Parlour with a simple idea: every client should leave feeling like the best version of themselves, without the fuss. <span class="edit">[Add a line here about how long you've been in business, e.g. "For over 12 years,"]</span> she and her team have been trusted by families in the neighbourhood for everything from a quick threading appointment to full bridal makeovers.</p>
+          <p><span class="edit">[Add Arti's training, certifications, or specialities here — for example, courses completed, brands trained in, or techniques she's known for.]</span></p>
+        </div>
+        <div class="signature">
+          <span class="who">Arti Panwar</span>
+          <span class="role">Owner &amp; lead beautician, Milan Beauty Parlour</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="section-head">
+        <hr class="rule">
+        <h2>Our services</h2>
+        <p>A quick look at what we offer. Prices below are examples — replace them with your own current price list.</p>
+      </div>
+
+      <div class="menu-grid">
+        <div class="menu-cat">
+          <h3>Hair</h3>
+          <div class="menu-item"><span class="name">Haircut &amp; styling</span><span class="leader"></span><span class="price edit">₹[499]</span></div>
+          <div class="menu-item"><span class="name">Hair spa</span><span class="leader"></span><span class="price edit">₹[899]</span></div>
+          <div class="menu-item"><span class="name">Global colour</span><span class="leader"></span><span class="price edit">₹[2,499]</span></div>
+          <div class="menu-item"><span class="name">Keratin treatment</span><span class="leader"></span><span class="price edit">₹[3,999]</span></div>
+        </div>
+        <div class="menu-cat">
+          <h3>Skin</h3>
+          <div class="menu-item"><span class="name">Classic facial</span><span class="leader"></span><span class="price edit">₹[799]</span></div>
+          <div class="menu-item"><span class="name">Gold facial</span><span class="leader"></span><span class="price edit">₹[1,499]</span></div>
+          <div class="menu-item"><span class="name">De-tan treatment</span><span class="leader"></span><span class="price edit">₹[599]</span></div>
+          <div class="menu-item"><span class="name">Eyebrow threading</span><span class="leader"></span><span class="price edit">₹[49]</span></div>
+        </div>
+        <div class="menu-cat">
+          <h3>Bridal &amp; makeup</h3>
+          <div class="menu-item"><span class="name">Party makeup</span><span class="leader"></span><span class="price edit">₹[1,999]</span></div>
+          <div class="menu-item"><span class="name">Bridal makeup</span><span class="leader"></span><span class="price edit">[On consultation]</span></div>
+          <div class="menu-item"><span class="name">Saree draping</span><span class="leader"></span><span class="price edit">₹[499]</span></div>
+          <div class="menu-item"><span class="name">Event hairstyling</span><span class="leader"></span><span class="price edit">₹[799]</span></div>
+        </div>
+        <div class="menu-cat">
+          <h3>Nails &amp; waxing</h3>
+          <div class="menu-item"><span class="name">Manicure</span><span class="leader"></span><span class="price edit">₹[399]</span></div>
+          <div class="menu-item"><span class="name">Pedicure</span><span class="leader"></span><span class="price edit">₹[499]</span></div>
+          <div class="menu-item"><span class="name">Full arms &amp; legs waxing</span><span class="leader"></span><span class="price edit">₹[699]</span></div>
+          <div class="menu-item"><span class="name">Nail art (per hand)</span><span class="leader"></span><span class="price edit">₹[299]</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <hr class="rule">
+        <h2>Our work</h2>
+        <p>Add photos of your space, your team and finished looks — clients love seeing real results before they book.</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="ph tall edit-block">[Photo]</div>
+        <div class="ph edit-block">[Photo]</div>
+        <div class="ph edit-block">[Photo]</div>
+        <div class="ph edit-block">[Photo]</div>
+        <div class="ph tall edit-block">[Photo]</div>
+        <div class="ph edit-block">[Photo]</div>
+        <div class="ph edit-block">[Photo]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="wrap">
+      <div class="section-head">
+        <hr class="rule">
+        <h2>What clients say</h2>
+        <p>Replace these with a few real reviews from your clients — even one or two lines make a difference.</p>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="mark">“</div>
+          <p class="quote edit">[Add a short client quote here — what did they get done, and how did it make them feel?]</p>
+          <p class="who edit">[Client name]</p>
+          <p class="where edit">[Neighbourhood, city]</p>
+        </div>
+        <div class="testi-card">
+          <div class="mark">“</div>
+          <p class="quote edit">[Add a short client quote here — what did they get done, and how did it make them feel?]</p>
+          <p class="who edit">[Client name]</p>
+          <p class="where edit">[Neighbourhood, city]</p>
+        </div>
+        <div class="testi-card">
+          <div class="mark">“</div>
+          <p class="quote edit">[Add a short client quote here — what did they get done, and how did it make them feel?]</p>
+          <p class="who edit">[Client name]</p>
+          <p class="where edit">[Neighbourhood, city]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS & LOCATION -->
+  <section class="hl" id="hours">
+    <div class="wrap">
+      <div class="section-head">
+        <hr class="rule">
+        <h2>Hours &amp; location</h2>
+        <p>Update the timings and address below to match your salon.</p>
+      </div>
+      <div class="hl-grid">
+        <div class="hours-list">
+          <div class="hours-row"><span>Monday – Saturday</span><span class="edit">[10:00 AM – 8:00 PM]</span></div>
+          <div class="hours-row"><span>Sunday</span><span class="edit">[11:00 AM – 6:00 PM]</span></div>
+          <div class="hours-row"><span>Public holidays</span><span class="edit">[Add hours or "Closed"]</span></div>
+        </div>
+        <div class="location-card">
+          <p><strong>Address</strong></p>
+          <p class="edit">[Shop number, street name, area, Raipur, Chhattisgarh, PIN code]</p>
+          <p><strong>Phone</strong></p>
+          <p class="edit">[+91 00000 00000]</p>
+          <div class="map-ph">[Embed a Google Maps link or map here so clients can find you easily]</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT / BOOKING -->
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-info">
+        <div class="section-head" style="margin-bottom:36px;">
+          <hr class="rule">
+          <h2>Book an appointment</h2>
+          <p>Send us a message and we'll confirm your slot, or reach out directly.</p>
+        </div>
+        <div class="item">
+          <div class="label">Phone</div>
+          <div class="value edit">[+91 00000 00000]</div>
+        </div>
+        <div class="item">
+          <div class="label">WhatsApp</div>
+          <div class="value edit">[+91 00000 00000]</div>
+        </div>
+        <div class="item">
+          <div class="label">Email</div>
+          <div class="value edit">[hello@milanbeautyparlour.example]</div>
+        </div>
+        <div class="item">
+          <div class="label">Instagram</div>
+          <div class="value edit">[@milanbeautyparlour]</div>
+        </div>
+      </div>
+
+      <form id="bookingForm">
+        <div class="field">
+          <label for="fname">Your name</label>
+          <input id="fname" name="name" type="text" placeholder="e.g. Priya Sharma" required>
+        </div>
+        <div class="row-2">
+          <div class="field">
+            <label for="fphone">Phone number</label>
+            <input id="fphone" name="phone" type="tel" placeholder="10-digit number" required>
+          </div>
+          <div class="field">
+            <label for="fservice">Service</label>
+            <select id="fservice" name="service">
+              <option>Hair</option>
+              <option>Skin &amp; facial</option>
+              <option>Bridal &amp; makeup</option>
+              <option>Nails &amp; waxing</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="fdate">Preferred date</label>
+          <input id="fdate" name="date" type="date">
+        </div>
+        <div class="field">
+          <label for="fmsg">Message (optional)</label>
+          <textarea id="fmsg" name="message" rows="3" placeholder="Anything you'd like us to know"></textarea>
+        </div>
+        <button type="submit" class="btn-primary submit-btn">Send request</button>
+        <p id="formStatus" role="status"></p>
+        <p class="form-note edit">[This form doesn't send anywhere yet — connect it to WhatsApp, email or a booking tool when you're ready to go live.]</p>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <span class="brand-text">
+          <span class="name" style="font-size:1.4rem;">Milan</span>
+          <span class="tag">Beauty Parlour</span>
+        </span>
+        <p style="margin-top:14px; color:var(--ink-soft); font-size:0.92rem; max-width:32ch;">A neighbourhood salon for hair, skin, bridal beauty and everyday self-care, owned and run by Arti Panwar.</p>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Book an appointment</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Find us</h4>
+        <ul>
+          <li class="edit">[Address line]</li>
+          <li class="edit">[Phone number]</li>
+          <li class="edit">[Instagram handle]</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Milan Beauty Parlour. Owned by Arti Panwar.</span>
+      <span class="edit">[Add any other footer note here]</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const burger = document.getElementById('burgerBtn');
+  const header = document.getElementById('siteHeader');
+  burger.addEventListener('click', () => {
+    const open = header.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.querySelectorAll('.mobile-panel a').forEach(a => {
+    a.addEventListener('click', () => {
+      header.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  const form = document.getElementById('bookingForm');
+  const status = document.getElementById('formStatus');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    status.textContent = "Thanks — this is a placeholder confirmation. Connect this form to email, WhatsApp or a booking tool to receive real requests.";
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
